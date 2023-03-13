@@ -17,21 +17,29 @@ const gameBoard = (() => {
     printGameBoard();
     activePlayer = 0;
   };
-  const toggleModal = () => {
+  const toggleModal = content => {
     const overlay = document.querySelector('.overlay');
     const modal = document.querySelector('.modal');
+    modal.innerHTML = '';
+    const playAgain = document.createElement('p');
+    playAgain.textContent = 'Do you want to play again?';
+    const displayContent = document.createElement('p');
+    modal.appendChild(playAgain);
+    modal.appendChild(displayContent);
+    displayContent.textContent = content;
     overlay.classList.toggle('hidden');
     modal.classList.toggle('hidden');
     overlay.addEventListener('click', function () {
-      overlay.classList.toggle('hidden');
-      modal.classList.toggle('hidden');
+      console.log('hey');
+      modal.innerHTML = '';
+      overlay.classList.add('hidden');
+      modal.classList.add('hidden');
     });
   };
 
   const checkGameOver = () => {
     if (gameBoardArray.flat().every(el => el !== '.')) {
-      console.log('Its a Draw!');
-      toggleModal();
+      toggleModal('Its a Draw!');
       clearBoard();
     }
   };
@@ -39,10 +47,10 @@ const gameBoard = (() => {
   const checkWinnerHorizontal = () =>
     gameBoardArray.forEach(row => {
       if (row.every(el => el === 'x')) {
-        console.log('you win');
+        toggleModal('you win');
         clearBoard();
       } else if (row.every(el => el === 'o')) {
-        console.log('you lose');
+        toggleModal('you lose');
         clearBoard();
       }
     });
@@ -55,15 +63,15 @@ const gameBoard = (() => {
         updatedBoard[i + 3] === 'x' &&
         updatedBoard[i + 6] === 'x'
       ) {
+        toggleModal('you win');
         clearBoard();
-        console.log('you win');
       } else if (
         updatedBoard[i] === 'o' &&
         updatedBoard[i + 3] === 'o' &&
         updatedBoard[i + 6] === 'o'
       ) {
+        toggleModal('you lose');
         clearBoard();
-        console.log('you lose');
       }
     }
   };
@@ -78,8 +86,8 @@ const gameBoard = (() => {
         updatedBoard[4] === 'x' &&
         updatedBoard[6] === 'x')
     ) {
+      toggleModal('you win');
       clearBoard();
-      console.log('you win');
     } else if (
       (updatedBoard[0] === 'o' &&
         updatedBoard[4] === 'o' &&
@@ -88,8 +96,8 @@ const gameBoard = (() => {
         updatedBoard[4] === 'o' &&
         updatedBoard[6] === 'o')
     ) {
+      toggleModal('you lose');
       clearBoard();
-      console.log('you lose');
     }
   };
 
