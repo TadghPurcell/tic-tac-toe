@@ -11,12 +11,13 @@ const gameBoard = (() => {
   const printGameBoard = () =>
     gameBoardArray.forEach(row => console.log(row.join(' ').split('\n')));
   const selectBoardCell = (row, column) => {
-    activePlayer === 0
-      ? (gameBoardArray[row][column] = 'x')
-      : (gameBoardArray[row][column] = 'o');
-    printGameBoard();
-    switchActivePlayer();
-    console.log(activePlayer);
+    if (gameBoardArray[row][column] === '.') {
+      activePlayer === 0
+        ? (gameBoardArray[row][column] = 'x')
+        : (gameBoardArray[row][column] = 'o');
+      printGameBoard();
+      switchActivePlayer();
+    } else return 'Error';
   };
   return { gameBoardArray, printGameBoard, selectBoardCell };
 })();
