@@ -11,13 +11,10 @@ const gameBoard = (() => {
   const switchActivePlayer = () =>
     activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
 
-  const printGameBoard = () =>
-    gameBoardArray.forEach(row => console.log(row.join(' ').split('\n')));
-
   const clearBoard = () => {
     gameBoardArray = gameBoardArray.map(row => row.map(cell => (cell = '.')));
     document.querySelector('.gameboard').innerHTML = '';
-    printGameBoardEl();
+    printGameBoard();
     activePlayer = 0;
   };
 
@@ -86,7 +83,6 @@ const gameBoard = (() => {
   };
 
   const selectBoardCell = (row, column) => {
-    console.log('as');
     if (gameBoardArray[row][column] === '.') {
       activePlayer === 0
         ? (gameBoardArray[row][column] = 'x')
@@ -96,7 +92,6 @@ const gameBoard = (() => {
       checkWinnerVertical();
       checkWinnerDiagonal();
       checkGameOver();
-      printGameBoard();
     } else return 'Error';
   };
 
@@ -108,7 +103,7 @@ const gameBoard = (() => {
     }
   };
 
-  const printGameBoardEl = () => {
+  const printGameBoard = () => {
     gameBoardArray.flat().forEach((_, i) => {
       const cellSquare = document.createElement('button');
       cellSquare.classList.add('cell');
@@ -118,7 +113,6 @@ const gameBoard = (() => {
           updateTextContent(e);
           return selectBoardCell(0, 0);
         }
-
         if (e.target.attributes.index.value === '1') {
           updateTextContent(e);
           return selectBoardCell(0, 1);
@@ -156,11 +150,10 @@ const gameBoard = (() => {
     });
   };
 
-  return { printGameBoard, selectBoardCell, clearBoard, printGameBoardEl };
+  return { printGameBoard, selectBoardCell, clearBoard };
 })();
 
 gameBoard.printGameBoard();
-gameBoard.printGameBoardEl();
 
 const Player = (name, number) => {
   return { name, number };
