@@ -40,6 +40,28 @@ const gameBoard = (() => {
     }
   };
 
+  const checkWinnerDiagonal = () => {
+    const updatedBoard = gameBoardArray.flat();
+    if (
+      (updatedBoard[0] === 'x' &&
+        updatedBoard[4] === 'x' &&
+        updatedBoard[8] === 'x') ||
+      (updatedBoard[2] === 'x' &&
+        updatedBoard[4] === 'x' &&
+        updatedBoard[6] === 'x')
+    )
+      return console.log('you win');
+    else if (
+      (updatedBoard[0] === 'o' &&
+        updatedBoard[4] === 'o' &&
+        updatedBoard[8] === 'o') ||
+      (updatedBoard[2] === 'o' &&
+        updatedBoard[4] === 'o' &&
+        updatedBoard[6] === 'o')
+    )
+      return console.log('you lose');
+  };
+
   const selectBoardCell = (row, column) => {
     if (gameBoardArray[row][column] === '.') {
       activePlayer === 0
@@ -47,6 +69,7 @@ const gameBoard = (() => {
         : (gameBoardArray[row][column] = 'o');
       checkWinnerHorizontal();
       checkWinnerVertical();
+      checkWinnerDiagonal();
       printGameBoard();
       switchActivePlayer();
     } else return 'Error';
