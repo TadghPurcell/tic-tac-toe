@@ -21,11 +21,11 @@ const gameBoard = (() => {
     const overlay = document.querySelector('.overlay');
     const modal = document.querySelector('.modal');
     modal.innerHTML = '';
-    const playAgain = document.createElement('p');
-    playAgain.textContent = 'Do you want to play again?';
+    // const playAgain = document.createElement('p');
+    // playAgain.textContent = 'Do you want to play again?';
     const displayContent = document.createElement('p');
-    modal.appendChild(playAgain);
     modal.appendChild(displayContent);
+    // modal.appendChild(playAgain);
     displayContent.textContent = content;
     overlay.classList.toggle('hidden');
     modal.classList.toggle('hidden');
@@ -34,24 +34,22 @@ const gameBoard = (() => {
       modal.innerHTML = '';
       overlay.classList.add('hidden');
       modal.classList.add('hidden');
+      clearBoard();
     });
   };
 
   const checkGameOver = () => {
     if (gameBoardArray.flat().every(el => el !== '.')) {
       toggleModal('Its a Draw!');
-      clearBoard();
     }
   };
 
   const checkWinnerHorizontal = () =>
     gameBoardArray.forEach(row => {
       if (row.every(el => el === 'x')) {
-        toggleModal('you win');
-        clearBoard();
+        toggleModal('You Win');
       } else if (row.every(el => el === 'o')) {
         toggleModal('you lose');
-        clearBoard();
       }
     });
 
@@ -64,14 +62,12 @@ const gameBoard = (() => {
         updatedBoard[i + 6] === 'x'
       ) {
         toggleModal('you win');
-        clearBoard();
       } else if (
         updatedBoard[i] === 'o' &&
         updatedBoard[i + 3] === 'o' &&
         updatedBoard[i + 6] === 'o'
       ) {
         toggleModal('you lose');
-        clearBoard();
       }
     }
   };
@@ -87,7 +83,6 @@ const gameBoard = (() => {
         updatedBoard[6] === 'x')
     ) {
       toggleModal('you win');
-      clearBoard();
     } else if (
       (updatedBoard[0] === 'o' &&
         updatedBoard[4] === 'o' &&
@@ -97,7 +92,6 @@ const gameBoard = (() => {
         updatedBoard[6] === 'o')
     ) {
       toggleModal('you lose');
-      clearBoard();
     }
   };
 
