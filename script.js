@@ -6,7 +6,12 @@ const gameBoard = (() => {
     [0, 0, 0],
   ];
   const printGameBoard = () => console.log(gameBoardArray);
-  return { printGameBoard };
+  const selectBoardCell = (row, column) => (gameBoardArray[row][column] = 'x');
+  return { gameBoardArray, printGameBoard, selectBoardCell };
 })();
 
 gameBoard.printGameBoard();
+
+const Player = name => {
+  console.log(name);
+};
