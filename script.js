@@ -1,4 +1,9 @@
 'use strict';
+const game = (() => {
+  console.log('eh');
+  return {};
+})();
+
 const gameBoard = (() => {
   let gameBoardArray = [
     ['.', '.', '.'],
@@ -19,23 +24,22 @@ const gameBoard = (() => {
   };
   const toggleModal = content => {
     const overlay = document.querySelector('.overlay');
-    const modal = document.querySelector('.modal');
-    modal.innerHTML = '';
-    // const playAgain = document.createElement('p');
-    // playAgain.textContent = 'Do you want to play again?';
+    const overlayText = document.querySelector('.overlay-text');
+    overlayText.innerHTML = '';
+
     const displayContent = document.createElement('p');
-    modal.appendChild(displayContent);
-    // modal.appendChild(playAgain);
+    overlayText.appendChild(displayContent);
     displayContent.textContent = content;
     overlay.classList.toggle('hidden');
-    modal.classList.toggle('hidden');
-    overlay.addEventListener('click', function () {
-      console.log('hey');
-      modal.innerHTML = '';
+    overlayText.classList.toggle('hidden');
+    const clearOverlay = () => {
+      overlayText.innerHTML = '';
       overlay.classList.add('hidden');
-      modal.classList.add('hidden');
+      overlayText.classList.add('hidden');
       clearBoard();
-    });
+    };
+    overlay.addEventListener('click', clearOverlay);
+    overlayText.addEventListener('click', clearOverlay);
   };
 
   const checkGameOver = () => {
@@ -163,7 +167,7 @@ const gameBoard = (() => {
     });
   };
 
-  return { printGameBoard, selectBoardCell, clearBoard };
+  return { printGameBoard, selectBoardCell, clearBoard, gameBoardArray };
 })();
 
 gameBoard.printGameBoard();
@@ -174,6 +178,3 @@ const Player = (name, number) => {
 
 const tadgh = Player('Tadgh', 0);
 const playerTwo = Player(undefined, 1);
-
-console.log(tadgh.number);
-console.log(playerTwo.number);

@@ -10,9 +10,11 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  color: #364954;
 }
 
 h1 {
+  font-size: 4rem;
   padding: 50px;
 }
 
@@ -46,7 +48,7 @@ h1 {
   display: none;
 }
 
-.modal {
+.overlay-text {
   position: absolute;
   z-index: 1;
   color: white;
