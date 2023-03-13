@@ -5,21 +5,33 @@ const gameBoard = (() => {
     ['.', '.', '.'],
     ['.', '.', '.'],
   ];
+
   let activePlayer = 0;
+
   const switchActivePlayer = () =>
     activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
+
   const printGameBoard = () =>
     gameBoardArray.forEach(row => console.log(row.join(' ').split('\n')));
+
+  const checkWinner = () =>
+    gameBoardArray.forEach((row, index) => {
+      if (row.every(el => el === 'x')) return console.log('you win');
+      else if (row.every(el => el === 'o')) return console.log('you lose');
+    });
+
   const selectBoardCell = (row, column) => {
     if (gameBoardArray[row][column] === '.') {
       activePlayer === 0
         ? (gameBoardArray[row][column] = 'x')
         : (gameBoardArray[row][column] = 'o');
+      checkWinner();
       printGameBoard();
       switchActivePlayer();
     } else return 'Error';
   };
-  return { gameBoardArray, printGameBoard, selectBoardCell };
+
+  return { printGameBoard, selectBoardCell, checkWinner };
 })();
 
 gameBoard.printGameBoard();
