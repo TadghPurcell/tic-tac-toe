@@ -16,6 +16,9 @@ const gameBoard = (() => {
 
   const clearBoard = () => {
     gameBoardArray = gameBoardArray.map(row => row.map(cell => (cell = '.')));
+    document.querySelector('.gameboard').innerHTML = '';
+    printGameBoardEl();
+    activePlayer = 0;
   };
 
   const checkGameOver = () => {
@@ -83,23 +86,81 @@ const gameBoard = (() => {
   };
 
   const selectBoardCell = (row, column) => {
+    console.log('as');
     if (gameBoardArray[row][column] === '.') {
       activePlayer === 0
         ? (gameBoardArray[row][column] = 'x')
         : (gameBoardArray[row][column] = 'o');
+      switchActivePlayer();
       checkWinnerHorizontal();
       checkWinnerVertical();
       checkWinnerDiagonal();
       checkGameOver();
       printGameBoard();
-      switchActivePlayer();
     } else return 'Error';
   };
 
-  return { printGameBoard, selectBoardCell, clearBoard };
+  const updateTextContent = e => {
+    if (!e.target.textContent) {
+      activePlayer === 0
+        ? (e.target.textContent = 'x')
+        : (e.target.textContent = 'o');
+    }
+  };
+
+  const printGameBoardEl = () => {
+    gameBoardArray.flat().forEach((_, i) => {
+      const cellSquare = document.createElement('button');
+      cellSquare.classList.add('cell');
+      cellSquare.setAttribute('index', i);
+      cellSquare.addEventListener('click', function (e) {
+        if (e.target.attributes.index.value === '0') {
+          updateTextContent(e);
+          return selectBoardCell(0, 0);
+        }
+
+        if (e.target.attributes.index.value === '1') {
+          updateTextContent(e);
+          return selectBoardCell(0, 1);
+        }
+        if (e.target.attributes.index.value === '2') {
+          updateTextContent(e);
+          return selectBoardCell(0, 2);
+        }
+        if (e.target.attributes.index.value === '3') {
+          updateTextContent(e);
+          return selectBoardCell(1, 0);
+        }
+        if (e.target.attributes.index.value === '4') {
+          updateTextContent(e);
+          return selectBoardCell(1, 1);
+        }
+        if (e.target.attributes.index.value === '5') {
+          updateTextContent(e);
+          return selectBoardCell(1, 2);
+        }
+        if (e.target.attributes.index.value === '6') {
+          updateTextContent(e);
+          return selectBoardCell(2, 0);
+        }
+        if (e.target.attributes.index.value === '7') {
+          updateTextContent(e);
+          return selectBoardCell(2, 1);
+        }
+        if (e.target.attributes.index.value === '8') {
+          updateTextContent(e);
+          return selectBoardCell(2, 2);
+        }
+      });
+      document.querySelector('.gameboard').appendChild(cellSquare);
+    });
+  };
+
+  return { printGameBoard, selectBoardCell, clearBoard, printGameBoardEl };
 })();
 
 gameBoard.printGameBoard();
+gameBoard.printGameBoardEl();
 
 const Player = (name, number) => {
   return { name, number };
