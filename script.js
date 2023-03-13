@@ -14,24 +14,45 @@ const gameBoard = (() => {
   const printGameBoard = () =>
     gameBoardArray.forEach(row => console.log(row.join(' ').split('\n')));
 
-  const checkWinner = () =>
+  const clearBoard = () => console.log(gameBoardArray.flat());
+
+  const checkWinnerHorizontal = () =>
     gameBoardArray.forEach((row, index) => {
       if (row.every(el => el === 'x')) return console.log('you win');
       else if (row.every(el => el === 'o')) return console.log('you lose');
     });
+
+  const checkWinnerVertical = () => {
+    const updatedBoard = gameBoardArray.flat();
+    for (let i = 0; i < updatedBoard.length; i++) {
+      if (
+        updatedBoard[i] === 'x' &&
+        updatedBoard[i + 3] === 'x' &&
+        updatedBoard[i + 6] === 'x'
+      )
+        return console.log('you win');
+      else if (
+        updatedBoard[i] === 'o' &&
+        updatedBoard[i + 3] === 'o' &&
+        updatedBoard[i + 6] === 'o'
+      )
+        return console.log('you lose');
+    }
+  };
 
   const selectBoardCell = (row, column) => {
     if (gameBoardArray[row][column] === '.') {
       activePlayer === 0
         ? (gameBoardArray[row][column] = 'x')
         : (gameBoardArray[row][column] = 'o');
-      checkWinner();
+      checkWinnerHorizontal();
+      checkWinnerVertical();
       printGameBoard();
       switchActivePlayer();
     } else return 'Error';
   };
 
-  return { printGameBoard, selectBoardCell, checkWinner };
+  return { printGameBoard, selectBoardCell, clearBoard, checkWinnerVertical };
 })();
 
 gameBoard.printGameBoard();
