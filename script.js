@@ -17,10 +17,21 @@ const gameBoard = (() => {
     printGameBoard();
     activePlayer = 0;
   };
+  const toggleModal = () => {
+    const overlay = document.querySelector('.overlay');
+    const modal = document.querySelector('.modal');
+    overlay.classList.toggle('hidden');
+    modal.classList.toggle('hidden');
+    overlay.addEventListener('click', function () {
+      overlay.classList.toggle('hidden');
+      modal.classList.toggle('hidden');
+    });
+  };
 
   const checkGameOver = () => {
     if (gameBoardArray.flat().every(el => el !== '.')) {
       console.log('Its a Draw!');
+      toggleModal();
       clearBoard();
     }
   };
