@@ -14,7 +14,8 @@ const gameBoard = (() => {
   const printGameBoard = () =>
     gameBoardArray.forEach(row => console.log(row.join(' ').split('\n')));
 
-  const clearBoard = () => console.log(gameBoardArray.flat());
+  const clearBoard = () =>
+    gameBoardArray.map(row => row.map(cell => (cell = '.')));
 
   const checkWinnerHorizontal = () =>
     gameBoardArray.forEach((row, index) => {
@@ -75,7 +76,7 @@ const gameBoard = (() => {
     } else return 'Error';
   };
 
-  return { printGameBoard, selectBoardCell, clearBoard, checkWinnerVertical };
+  return { printGameBoard, selectBoardCell, clearBoard };
 })();
 
 gameBoard.printGameBoard();
