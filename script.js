@@ -173,7 +173,14 @@ const gameBoard = (() => {
 })();
 
 const game = (() => {
+  const playerNames = [];
   btnRestart.addEventListener('click', gameBoard.clearBoard);
+  const getPlayerNames = function () {
+    playerNames.push(
+      document.getElementById('player-one').value,
+      document.getElementById('player-two').value
+    );
+  };
   btnStart.addEventListener('click', function (e) {
     e.preventDefault();
     console.log('hey');
@@ -187,15 +194,12 @@ const game = (() => {
     scoreboardPlayerTwoEl.classList.remove('hidden');
 
     //input names
+    getPlayerNames();
 
     console.log(document.querySelector('#player-one').value);
     console.log(document.querySelector('#player-two').value);
   });
-  return {};
+  return { playerNames, playerOneName };
 })();
 gameBoard.printGameBoard();
 console.log(gameBoard);
-
-const Player = (name, number) => {
-  return { name, number };
-};
