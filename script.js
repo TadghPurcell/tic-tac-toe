@@ -13,6 +13,7 @@ const gameBoard = (() => {
     ['.', '.', '.'],
   ];
 
+  const playerNames = [];
   let activePlayer = 0;
 
   const switchActivePlayer = () =>
@@ -169,17 +170,35 @@ const gameBoard = (() => {
     });
   };
 
-  return { printGameBoard, selectBoardCell, clearBoard, gameBoardArray };
+  return {
+    printGameBoard,
+    selectBoardCell,
+    clearBoard,
+    gameBoardArray,
+    playerNames,
+  };
 })();
 
-const game = (() => {
-  const playerNames = [];
+const displayScreen = (() => {
   btnRestart.addEventListener('click', gameBoard.clearBoard);
   const getPlayerNames = function () {
-    playerNames.push(
+    gameBoard.playerNames.push(
       document.getElementById('player-one').value,
       document.getElementById('player-two').value
     );
+  };
+
+  const populateScoreboards = function () {
+    console.log('heowya');
+    const scoreboardOneName = document.createElement('p');
+    scoreboardOneName.textContent = `${gameBoard.playerNames[0]}`;
+    const scoreboardOneScore = document.createElement('p');
+    const scoreboardTwoName = document.createElement('p');
+    scoreboardTwoName.textContent = `${gameBoard.playerNames[1]}`;
+    const scoreboardTwoScore = document.createElement('p');
+
+    scoreboardPlayerOneEl.appendChild(scoreboardOneName);
+    scoreboardPlayerTwoEl.appendChild(scoreboardTwoName);
   };
   btnStart.addEventListener('click', function (e) {
     e.preventDefault();
@@ -195,11 +214,12 @@ const game = (() => {
 
     //input names
     getPlayerNames();
+    populateScoreboards();
 
     console.log(document.querySelector('#player-one').value);
     console.log(document.querySelector('#player-two').value);
   });
-  return { playerNames, playerOneName };
+  return {};
 })();
 gameBoard.printGameBoard();
 console.log(gameBoard);
