@@ -13,8 +13,16 @@ const gameBoard = (() => {
     ['.', '.', '.'],
   ];
 
-  const playerNames = [];
   let activePlayer = 0;
+  const playerNames = [];
+  let playerScores = [0, 0];
+  const scoreboardOneName = document.createElement('p');
+  const scoreboardTwoName = document.createElement('p');
+  const scoreboardOneScore = document.createElement('p');
+  const scoreboardTwoScore = document.createElement('p');
+
+  const playerOneWins = () => playerScores[0]++;
+  const playerTwoWins = () => playerScores[1]++;
 
   const switchActivePlayer = () =>
     activePlayer === 0 ? (activePlayer = 1) : (activePlayer = 0);
@@ -23,19 +31,22 @@ const gameBoard = (() => {
     gameBoardArray = gameBoardArray.map(row => row.map(cell => (cell = '.')));
     gameBoardEl.innerHTML = '';
     printGameBoard();
+    updateScores();
     activePlayer = 0;
   };
-
-  const scoreboardOneName = document.createElement('p');
-  const scoreboardTwoName = document.createElement('p');
+  const updateScores = () => {
+    scoreboardOneScore.textContent = `${gameBoard.playerScores[0]}`;
+    scoreboardTwoScore.textContent = `${gameBoard.playerScores[1]}`;
+  };
   const populateScoreboards = function () {
     scoreboardOneName.textContent = `${gameBoard.playerNames[0]}`;
-    const scoreboardOneScore = document.createElement('p');
     scoreboardTwoName.textContent = `${gameBoard.playerNames[1]}`;
-    const scoreboardTwoScore = document.createElement('p');
+    updateScores();
 
     scoreboardPlayerOneEl.appendChild(scoreboardOneName);
+    scoreboardPlayerOneEl.appendChild(scoreboardOneScore);
     scoreboardPlayerTwoEl.appendChild(scoreboardTwoName);
+    scoreboardPlayerTwoEl.appendChild(scoreboardTwoScore);
   };
 
   const resetGame = function () {
@@ -88,8 +99,10 @@ const gameBoard = (() => {
   const checkWinnerHorizontal = () =>
     gameBoardArray.forEach(row => {
       if (row.every(el => el === 'x')) {
+        playerOneWins();
         toggleModal('You Win');
       } else if (row.every(el => el === 'o')) {
+        playerTwoWins();
         toggleModal('you lose');
       }
     });
@@ -102,12 +115,14 @@ const gameBoard = (() => {
         updatedBoard[i + 3] === 'x' &&
         updatedBoard[i + 6] === 'x'
       ) {
+        playerOneWins();
         toggleModal('you win');
       } else if (
         updatedBoard[i] === 'o' &&
         updatedBoard[i + 3] === 'o' &&
         updatedBoard[i + 6] === 'o'
       ) {
+        playerTwoWins();
         toggleModal('you lose');
       }
     }
@@ -123,6 +138,7 @@ const gameBoard = (() => {
         updatedBoard[4] === 'x' &&
         updatedBoard[6] === 'x')
     ) {
+      playerOneWins();
       toggleModal('you win');
     } else if (
       (updatedBoard[0] === 'o' &&
@@ -132,6 +148,7 @@ const gameBoard = (() => {
         updatedBoard[4] === 'o' &&
         updatedBoard[6] === 'o')
     ) {
+      playerTwoWins();
       toggleModal('you lose');
     }
   };
@@ -212,6 +229,7 @@ const gameBoard = (() => {
     playerNames,
     revertToMainMenu,
     populateScoreboards,
+    playerScores,
   };
 })();
 
@@ -237,7 +255,6 @@ const displayScreen = (() => {
   // };
   btnStart.addEventListener('click', function (e) {
     e.preventDefault();
-    console.log('hey');
     // hide form
     twoPlayerForm.classList.add('hidden');
 
@@ -253,8 +270,7 @@ const displayScreen = (() => {
 
     console.log(document.querySelector('#player-one').value);
     console.log(document.querySelector('#player-two').value);
+    gameBoard.printGameBoard();
   });
   return {};
 })();
-gameBoard.printGameBoard();
-console.log(gameBoard);
