@@ -237,22 +237,11 @@ const displayScreen = (() => {
   btnRestart.addEventListener('click', gameBoard.revertToMainMenu);
   const getPlayerNames = function () {
     gameBoard.playerNames.push(
-      document.getElementById('player-one').value,
-      document.getElementById('player-two').value
+      document.getElementById('player-one').value || 'Player One',
+      document.getElementById('player-two').value || 'Player Two'
     );
   };
 
-  // const populateScoreboards = function () {
-  //   const scoreboardOneName = document.createElement('p');
-  //   scoreboardOneName.textContent = `${gameBoard.playerNames[0]}`;
-  //   const scoreboardOneScore = document.createElement('p');
-  //   const scoreboardTwoName = document.createElement('p');
-  //   scoreboardTwoName.textContent = `${gameBoard.playerNames[1]}`;
-  //   const scoreboardTwoScore = document.createElement('p');
-
-  //   scoreboardPlayerOneEl.appendChild(scoreboardOneName);
-  //   scoreboardPlayerTwoEl.appendChild(scoreboardTwoName);
-  // };
   btnStart.addEventListener('click', function (e) {
     e.preventDefault();
     // hide form
