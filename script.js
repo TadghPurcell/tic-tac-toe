@@ -84,6 +84,7 @@ const gameBoard = (() => {
       overlay.classList.add('hidden');
       overlayText.classList.add('hidden');
       clearBoard();
+      printGameBoard();
     };
     overlay.addEventListener('click', clearOverlay);
     overlayText.addEventListener('click', clearOverlay);
