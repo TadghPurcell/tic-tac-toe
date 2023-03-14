@@ -1,8 +1,10 @@
 'use strict';
-const game = (() => {
-  console.log('eh');
-  return {};
-})();
+const btnStart = document.querySelector('.btn-form');
+const btnRestart = document.querySelector('.btn-restart');
+const twoPlayerForm = document.querySelector('.start-two-player');
+const gameBoardEl = document.querySelector('.gameboard');
+const scoreboardPlayerOneEl = document.querySelector('.scoreboard-player-one');
+const scoreboardPlayerTwoEl = document.querySelector('.scoreboard-player-two');
 
 const gameBoard = (() => {
   let gameBoardArray = [
@@ -18,7 +20,7 @@ const gameBoard = (() => {
 
   const clearBoard = () => {
     gameBoardArray = gameBoardArray.map(row => row.map(cell => (cell = '.')));
-    document.querySelector('.gameboard').innerHTML = '';
+    gameBoardEl.innerHTML = '';
     printGameBoard();
     activePlayer = 0;
   };
@@ -163,18 +165,37 @@ const gameBoard = (() => {
           return selectBoardCell(2, 2);
         }
       });
-      document.querySelector('.gameboard').appendChild(cellSquare);
+      gameBoardEl.appendChild(cellSquare);
     });
   };
 
   return { printGameBoard, selectBoardCell, clearBoard, gameBoardArray };
 })();
 
+const game = (() => {
+  btnRestart.addEventListener('click', gameBoard.clearBoard);
+  btnStart.addEventListener('click', function (e) {
+    e.preventDefault();
+    console.log('hey');
+    // hide form
+    twoPlayerForm.classList.add('hidden');
+
+    //display screen
+    gameBoardEl.classList.remove('hidden');
+    btnRestart.classList.remove('hidden');
+    scoreboardPlayerOneEl.classList.remove('hidden');
+    scoreboardPlayerTwoEl.classList.remove('hidden');
+
+    //input names
+
+    console.log(document.querySelector('#player-one').value);
+    console.log(document.querySelector('#player-two').value);
+  });
+  return {};
+})();
 gameBoard.printGameBoard();
+console.log(gameBoard);
 
 const Player = (name, number) => {
   return { name, number };
 };
-
-const tadgh = Player('Tadgh', 0);
-const playerTwo = Player(undefined, 1);

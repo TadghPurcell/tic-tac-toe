@@ -8,10 +8,40 @@
     <title>Tic Tac Toe</title>
   </head>
   <body>
-    <h1>Tic Tac Toe</h1>
-    <div class="gameboard"></div>
+    <div class="header">
+      <h1>Tic Tac Toe</h1>
+    </div>
+    <div class="main">
+      <form class="start-two-player" action="">
+        <div class="player-one-container">
+          <label for="player-one">Player One:</label>
+          <input
+            type="text"
+            name="player-one"
+            id="player-one"
+            placeholder="Player One"
+          />
+        </div>
+        <div class="player-two-container">
+          <label for="player-two">Player Two:</label>
+          <input
+            type="text"
+            name="player-two"
+            id="player-two"
+            placeholder="Player Two"
+          />
+        </div>
+        <button type="submit" class="btn-form">Start Game?</button>
+      </form>
+      <div class="main-display">
+        <div class="scoreboard-player-one hidden"></div>
+        <div class="gameboard hidden"></div>
+        <div class="scoreboard-player-two hidden"></div>
+      </div>
+      <div class="overlay hidden"></div>
+      <div class="overlay-text hidden"></div>
+    </div>
+    <button type="button" class="btn-restart hidden">Restart</button>
     <script src="script.js"></script>
-    <div class="overlay hidden"></div>
-    <div class="overlay-text hidden"></div>
   </body>
 </html>

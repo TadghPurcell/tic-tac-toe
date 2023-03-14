@@ -18,6 +18,20 @@ h1 {
   padding: 50px;
 }
 
+.main-display {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.main-display > * {
+  border: 1px solid #000;
+}
+
+.start-two-player {
+  width: 500px;
+  height: 500px;
+  border: 1px solid #000;
+}
 .gameboard {
   height: 500px;
   width: 500px;
