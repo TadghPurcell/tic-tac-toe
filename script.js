@@ -30,7 +30,6 @@ const gameBoard = (() => {
   const clearBoard = () => {
     gameBoardArray = gameBoardArray.map(row => row.map(cell => (cell = '.')));
     gameBoardEl.innerHTML = '';
-    printGameBoard();
     updateScores();
     activePlayer = 0;
   };
