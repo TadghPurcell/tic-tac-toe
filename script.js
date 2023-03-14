@@ -25,6 +25,40 @@ const gameBoard = (() => {
     printGameBoard();
     activePlayer = 0;
   };
+
+  const scoreboardOneName = document.createElement('p');
+  const scoreboardTwoName = document.createElement('p');
+  const populateScoreboards = function () {
+    scoreboardOneName.textContent = `${gameBoard.playerNames[0]}`;
+    const scoreboardOneScore = document.createElement('p');
+    scoreboardTwoName.textContent = `${gameBoard.playerNames[1]}`;
+    const scoreboardTwoScore = document.createElement('p');
+
+    scoreboardPlayerOneEl.appendChild(scoreboardOneName);
+    scoreboardPlayerTwoEl.appendChild(scoreboardTwoName);
+  };
+
+  const resetGame = function () {
+    // display form
+    twoPlayerForm.classList.remove('hidden');
+
+    //hide screen
+    gameBoardEl.classList.add('hidden');
+    btnRestart.classList.add('hidden');
+    scoreboardPlayerOneEl.classList.add('hidden');
+    scoreboardPlayerTwoEl.classList.add('hidden');
+
+    playerNames.pop();
+    playerNames.pop();
+
+    scoreboardPlayerOneEl.removeChild(scoreboardOneName);
+    scoreboardPlayerTwoEl.removeChild(scoreboardTwoName);
+  };
+
+  const revertToMainMenu = function () {
+    clearBoard();
+    resetGame();
+  };
   const toggleModal = content => {
     const overlay = document.querySelector('.overlay');
     const overlayText = document.querySelector('.overlay-text');
@@ -176,11 +210,13 @@ const gameBoard = (() => {
     clearBoard,
     gameBoardArray,
     playerNames,
+    revertToMainMenu,
+    populateScoreboards,
   };
 })();
 
 const displayScreen = (() => {
-  btnRestart.addEventListener('click', gameBoard.clearBoard);
+  btnRestart.addEventListener('click', gameBoard.revertToMainMenu);
   const getPlayerNames = function () {
     gameBoard.playerNames.push(
       document.getElementById('player-one').value,
@@ -188,18 +224,17 @@ const displayScreen = (() => {
     );
   };
 
-  const populateScoreboards = function () {
-    console.log('heowya');
-    const scoreboardOneName = document.createElement('p');
-    scoreboardOneName.textContent = `${gameBoard.playerNames[0]}`;
-    const scoreboardOneScore = document.createElement('p');
-    const scoreboardTwoName = document.createElement('p');
-    scoreboardTwoName.textContent = `${gameBoard.playerNames[1]}`;
-    const scoreboardTwoScore = document.createElement('p');
+  // const populateScoreboards = function () {
+  //   const scoreboardOneName = document.createElement('p');
+  //   scoreboardOneName.textContent = `${gameBoard.playerNames[0]}`;
+  //   const scoreboardOneScore = document.createElement('p');
+  //   const scoreboardTwoName = document.createElement('p');
+  //   scoreboardTwoName.textContent = `${gameBoard.playerNames[1]}`;
+  //   const scoreboardTwoScore = document.createElement('p');
 
-    scoreboardPlayerOneEl.appendChild(scoreboardOneName);
-    scoreboardPlayerTwoEl.appendChild(scoreboardTwoName);
-  };
+  //   scoreboardPlayerOneEl.appendChild(scoreboardOneName);
+  //   scoreboardPlayerTwoEl.appendChild(scoreboardTwoName);
+  // };
   btnStart.addEventListener('click', function (e) {
     e.preventDefault();
     console.log('hey');
@@ -214,7 +249,7 @@ const displayScreen = (() => {
 
     //input names
     getPlayerNames();
-    populateScoreboards();
+    gameBoard.populateScoreboards();
 
     console.log(document.querySelector('#player-one').value);
     console.log(document.querySelector('#player-two').value);
