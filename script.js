@@ -14,56 +14,55 @@ const gameBoard = (() => {
       game.activePlayer === 0
         ? (gameBoard.gameBoardArray[row][column] = 'x')
         : (gameBoard.gameBoardArray[row][column] = 'o');
+
       game.switchActivePlayer();
       game.checkGameOver();
-    } else {
-      console.log(gameBoard.gameBoardArray);
-      return;
-    }
+    } else return;
   };
 
   const printGameBoard = () => {
     gameBoardArray.flat().forEach((_, i) => {
       const cellSquare = document.createElement('button');
+
       cellSquare.classList.add('cell');
       cellSquare.setAttribute('index', i);
+
       cellSquare.addEventListener('click', function (e) {
-        console.log(gameBoard.gameBoardArray);
         if (e.target.attributes.index.value === '0') {
           displayScreen.updateTextContent(e);
-          return gameBoard.selectBoardCell(0, 0);
+          gameBoard.selectBoardCell(0, 0);
         }
         if (e.target.attributes.index.value === '1') {
           displayScreen.updateTextContent(e);
-          return gameBoard.selectBoardCell(0, 1);
+          gameBoard.selectBoardCell(0, 1);
         }
         if (e.target.attributes.index.value === '2') {
           displayScreen.updateTextContent(e);
-          return gameBoard.selectBoardCell(0, 2);
+          gameBoard.selectBoardCell(0, 2);
         }
         if (e.target.attributes.index.value === '3') {
           displayScreen.updateTextContent(e);
-          return gameBoard.selectBoardCell(1, 0);
+          gameBoard.selectBoardCell(1, 0);
         }
         if (e.target.attributes.index.value === '4') {
           displayScreen.updateTextContent(e);
-          return gameBoard.selectBoardCell(1, 1);
+          gameBoard.selectBoardCell(1, 1);
         }
         if (e.target.attributes.index.value === '5') {
           displayScreen.updateTextContent(e);
-          return gameBoard.selectBoardCell(1, 2);
+          gameBoard.selectBoardCell(1, 2);
         }
         if (e.target.attributes.index.value === '6') {
           displayScreen.updateTextContent(e);
-          return gameBoard.selectBoardCell(2, 0);
+          gameBoard.selectBoardCell(2, 0);
         }
         if (e.target.attributes.index.value === '7') {
           displayScreen.updateTextContent(e);
-          return gameBoard.selectBoardCell(2, 1);
+          gameBoard.selectBoardCell(2, 1);
         }
         if (e.target.attributes.index.value === '8') {
           displayScreen.updateTextContent(e);
-          return gameBoard.selectBoardCell(2, 2);
+          gameBoard.selectBoardCell(2, 2);
         }
       });
       gameBoard.gameBoardEl.appendChild(cellSquare);
@@ -83,19 +82,30 @@ const displayScreen = (() => {
 
   const scoreboardPlayerOneEl = document.querySelector(
     '.scoreboard-player-one'
-  ); // display
+  );
   const scoreboardPlayerTwoEl = document.querySelector(
     '.scoreboard-player-two'
-  ); // display
-  const scoreboardOneName = document.createElement('p'); //display
-  const scoreboardTwoName = document.createElement('p'); //display
-  const scoreboardOneScore = document.createElement('p'); //display
-  const scoreboardTwoScore = document.createElement('p'); // display
+  );
+  const scoreboardOneName = document.createElement('p');
+  const scoreboardTwoName = document.createElement('p');
+  const scoreboardOneScore = document.createElement('p');
+  const scoreboardTwoScore = document.createElement('p');
 
-  const updateScores = () => {
-    scoreboardOneScore.textContent = `${game.playerScores[0]}`;
-    scoreboardTwoScore.textContent = `${game.playerScores[1]}`;
-  }; //display
+  const startGame = e => {
+    e.preventDefault();
+
+    twoPlayerForm.classList.add('hidden');
+
+    gameBoard.gameBoardEl.classList.remove('hidden');
+    game.btnRestart.classList.remove('hidden');
+    scoreboardPlayerOneEl.classList.remove('hidden');
+    scoreboardPlayerTwoEl.classList.remove('hidden');
+
+    game.getPlayerNames();
+    displayScreen.populateScoreboards();
+
+    gameBoard.printGameBoard();
+  };
 
   const clearBoard = () => {
     gameBoard.gameBoardArray = gameBoard.gameBoardArray.map(row =>
@@ -104,7 +114,12 @@ const displayScreen = (() => {
     gameBoard.gameBoardEl.innerHTML = '';
     updateScores();
     game.activePlayer = 0;
-  }; //display
+  };
+
+  const updateScores = () => {
+    scoreboardOneScore.textContent = `${game.playerScores[0]}`;
+    scoreboardTwoScore.textContent = `${game.playerScores[1]}`;
+  };
 
   const populateScoreboards = function () {
     scoreboardOneName.textContent = `${game.playerNames[0]}`;
@@ -115,7 +130,7 @@ const displayScreen = (() => {
     scoreboardPlayerOneEl.appendChild(scoreboardOneScore);
     scoreboardPlayerTwoEl.appendChild(scoreboardTwoName);
     scoreboardPlayerTwoEl.appendChild(scoreboardTwoScore);
-  }; // display
+  };
 
   const updateTextContent = e => {
     if (!e.target.textContent) {
@@ -123,13 +138,11 @@ const displayScreen = (() => {
         ? (e.target.textContent = 'x')
         : (e.target.textContent = 'o');
     }
-  }; //display
+  };
 
   const resetGame = function () {
-    // display form
     twoPlayerForm.classList.remove('hidden');
 
-    //hide screen
     gameBoard.gameBoardEl.classList.add('hidden');
     game.btnRestart.classList.add('hidden');
     scoreboardPlayerOneEl.classList.add('hidden');
@@ -145,12 +158,7 @@ const displayScreen = (() => {
 
     game.inputPlayerOne.value = '';
     game.inputPlayerTwo.value = '';
-  }; //
-
-  const revertToMainMenu = function () {
-    clearBoard();
-    resetGame();
-  }; //
+  };
 
   const toggleModal = content => {
     const overlay = document.querySelector('.overlay');
@@ -171,23 +179,11 @@ const displayScreen = (() => {
     };
     overlay.addEventListener('click', clearOverlay);
     overlayText.addEventListener('click', clearOverlay);
-  }; //display
+  };
 
-  const startGame = e => {
-    e.preventDefault();
-    // hide form
-    twoPlayerForm.classList.add('hidden');
-
-    //display screen
-    gameBoard.gameBoardEl.classList.remove('hidden');
-    game.btnRestart.classList.remove('hidden');
-    scoreboardPlayerOneEl.classList.remove('hidden');
-    scoreboardPlayerTwoEl.classList.remove('hidden');
-    //input names
-    game.getPlayerNames();
-    displayScreen.populateScoreboards();
-
-    gameBoard.printGameBoard();
+  const revertToMainMenu = function () {
+    clearBoard();
+    resetGame();
   };
 
   return {
@@ -204,25 +200,22 @@ const game = (() => {
   const inputPlayerOne = document.getElementById('player-one');
   const inputPlayerTwo = document.getElementById('player-two');
   const btnStart = document.querySelector('.btn-form');
-  const btnRestart = document.querySelector('.btn-restart'); // display
+  const btnRestart = document.querySelector('.btn-restart');
 
-  let activePlayer = 0; // game
-  let playerScores = [0, 0]; // game
+  let activePlayer = 0;
+  let playerScores = [0, 0];
 
-  const playerNames = []; // game
+  const playerNames = [];
 
-  btnStart.addEventListener('click', displayScreen.startGame); //display
-  btnRestart.addEventListener('click', displayScreen.revertToMainMenu); // display
-
-  const playerOneWins = () => playerScores[0]++; //game
-  const playerTwoWins = () => playerScores[1]++; //game
+  const playerOneWins = () => game.playerScores[0]++;
+  const playerTwoWins = () => game.playerScores[1]++;
 
   const getPlayerNames = function () {
     game.playerNames.push(
       document.getElementById('player-one').value || 'Player One',
       document.getElementById('player-two').value || 'Player Two'
     );
-  }; //game
+  };
 
   const switchActivePlayer = () =>
     game.activePlayer === 0 ? (game.activePlayer = 1) : (game.activePlayer = 0); //game
@@ -231,7 +224,7 @@ const game = (() => {
     if (gameBoard.gameBoardArray.flat().every(el => el !== '.')) {
       displayScreen.toggleModal('Its a Draw!');
     }
-  }; //game
+  };
 
   const checkWinnerHorizontal = () =>
     gameBoard.gameBoardArray.forEach(row => {
@@ -242,7 +235,7 @@ const game = (() => {
         playerTwoWins();
         displayScreen.toggleModal('you lose');
       }
-    }); //game
+    });
 
   const checkWinnerVertical = () => {
     const updatedBoard = gameBoard.gameBoardArray.flat();
@@ -263,7 +256,7 @@ const game = (() => {
         displayScreen.toggleModal('you lose');
       }
     }
-  }; //game
+  };
 
   const checkWinnerDiagonal = () => {
     const updatedBoard = gameBoard.gameBoardArray.flat();
@@ -288,14 +281,18 @@ const game = (() => {
       playerTwoWins();
       displayScreen.toggleModal('you lose');
     }
-  }; //game
+  };
 
   const checkGameOver = () => {
     checkWinnerHorizontal();
     checkWinnerVertical();
     checkWinnerDiagonal();
     checkDraw();
-  }; //game
+  };
+
+  btnStart.addEventListener('click', displayScreen.startGame);
+  btnRestart.addEventListener('click', displayScreen.revertToMainMenu);
+
   return {
     inputPlayerOne,
     inputPlayerTwo,
