@@ -9,13 +9,18 @@ const gameBoard = (() => {
   ];
 
   const selectBoardCell = (row, column) => {
-    if (gameBoardArray[row][column] === '.') {
+    if (gameBoard.gameBoardArray[row][column] === '.') {
+      console.log('workng');
       game.activePlayer === 0
-        ? (gameBoardArray[row][column] = 'x')
-        : (gameBoardArray[row][column] = 'o');
+        ? (gameBoard.gameBoardArray[row][column] = 'x')
+        : (gameBoard.gameBoardArray[row][column] = 'o');
       game.switchActivePlayer();
       game.checkGameOver();
-    } else return 'Error';
+    } else {
+      console.log('error');
+      console.log(gameBoard.gameBoardArray);
+      return;
+    }
   }; //gameboard
 
   const printGameBoard = () => {
