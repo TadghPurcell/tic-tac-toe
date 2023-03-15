@@ -10,14 +10,12 @@ const gameBoard = (() => {
 
   const selectBoardCell = (row, column) => {
     if (gameBoard.gameBoardArray[row][column] === '.') {
-      console.log('workng');
       game.activePlayer === 0
         ? (gameBoard.gameBoardArray[row][column] = 'x')
         : (gameBoard.gameBoardArray[row][column] = 'o');
       game.switchActivePlayer();
       game.checkGameOver();
     } else {
-      console.log('error');
       console.log(gameBoard.gameBoardArray);
       return;
     }
@@ -144,6 +142,9 @@ const displayScreen = (() => {
 
     scoreboardPlayerOneEl.removeChild(scoreboardOneName);
     scoreboardPlayerTwoEl.removeChild(scoreboardTwoName);
+
+    game.inputPlayerOne.value = '';
+    game.inputPlayerTwo.value = '';
   }; //
 
   const revertToMainMenu = function () {
@@ -201,6 +202,8 @@ const displayScreen = (() => {
 })();
 
 const game = (() => {
+  const inputPlayerOne = document.getElementById('player-one');
+  const inputPlayerTwo = document.getElementById('player-two');
   const btnRestart = document.querySelector('.btn-restart'); // display
 
   let activePlayer = 0; // game
@@ -293,6 +296,8 @@ const game = (() => {
     checkDraw();
   }; //game
   return {
+    inputPlayerOne,
+    inputPlayerTwo,
     btnRestart,
     activePlayer,
     playerNames,
