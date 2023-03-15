@@ -1,7 +1,8 @@
 'use strict';
 
 const gameBoard = (() => {
-  const gameBoardEl = document.querySelector('.gameboard'); //gameboard
+  const gameBoardEl = document.querySelector('.gameboard');
+
   let gameBoardArray = [
     ['.', '.', '.'],
     ['.', '.', '.'],
@@ -19,7 +20,7 @@ const gameBoard = (() => {
       console.log(gameBoard.gameBoardArray);
       return;
     }
-  }; //gameboard
+  };
 
   const printGameBoard = () => {
     gameBoardArray.flat().forEach((_, i) => {
@@ -78,9 +79,8 @@ const gameBoard = (() => {
 })();
 
 const displayScreen = (() => {
-  const twoPlayerForm = document.querySelector('.start-two-player'); // display
-  const btnStart = document.querySelector('.btn-form'); // display
-  // const btnRestart = document.querySelector('.btn-restart'); // display
+  const twoPlayerForm = document.querySelector('.start-two-player');
+
   const scoreboardPlayerOneEl = document.querySelector(
     '.scoreboard-player-one'
   ); // display
@@ -173,7 +173,7 @@ const displayScreen = (() => {
     overlayText.addEventListener('click', clearOverlay);
   }; //display
 
-  btnStart.addEventListener('click', function (e) {
+  const startGame = e => {
     e.preventDefault();
     // hide form
     twoPlayerForm.classList.add('hidden');
@@ -183,27 +183,27 @@ const displayScreen = (() => {
     game.btnRestart.classList.remove('hidden');
     scoreboardPlayerOneEl.classList.remove('hidden');
     scoreboardPlayerTwoEl.classList.remove('hidden');
-
     //input names
     game.getPlayerNames();
     displayScreen.populateScoreboards();
 
-    console.log(document.querySelector('#player-one').value);
-    console.log(document.querySelector('#player-two').value);
     gameBoard.printGameBoard();
-  }); //display
+  };
+
   return {
     populateScoreboards,
     clearBoard,
     updateTextContent,
     toggleModal,
     revertToMainMenu,
+    startGame,
   };
 })();
 
 const game = (() => {
   const inputPlayerOne = document.getElementById('player-one');
   const inputPlayerTwo = document.getElementById('player-two');
+  const btnStart = document.querySelector('.btn-form');
   const btnRestart = document.querySelector('.btn-restart'); // display
 
   let activePlayer = 0; // game
@@ -211,6 +211,7 @@ const game = (() => {
 
   const playerNames = []; // game
 
+  btnStart.addEventListener('click', displayScreen.startGame); //display
   btnRestart.addEventListener('click', displayScreen.revertToMainMenu); // display
 
   const playerOneWins = () => playerScores[0]++; //game
