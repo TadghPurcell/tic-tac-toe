@@ -15,7 +15,7 @@ const gameBoard = (() => {
 
       game.switchActivePlayer();
       game.checkGameOver();
-    } else return;
+    }
   };
 
   const printGameBoard = () => {
@@ -26,6 +26,7 @@ const gameBoard = (() => {
       cellSquare.setAttribute('index', i);
 
       cellSquare.addEventListener('click', function (e) {
+        console.log(gameBoard.gameBoardArray);
         if (e.target.attributes.index.value === '0') {
           displayScreen.updateTextContent(e);
           selectBoardCell(0, 0);
@@ -90,6 +91,8 @@ const displayScreen = (() => {
   const scoreboardTwoName = document.createElement('p');
   const scoreboardOneScore = document.createElement('p');
   const scoreboardTwoScore = document.createElement('p');
+  const overlay = document.querySelector('.overlay');
+  const overlayText = document.querySelector('.overlay-text');
 
   const clearBoard = () => {
     gameBoard.gameBoardArray = gameBoard.gameBoardArray.map(row =>
@@ -117,6 +120,7 @@ const displayScreen = (() => {
   };
 
   const startGame = e => {
+    console.log(gameBoard.gameBoardArray);
     e.preventDefault();
 
     twoPlayerForm.classList.add('hidden');
@@ -128,6 +132,7 @@ const displayScreen = (() => {
 
     game.getPlayerNames();
     populateScoreboards();
+    clearBoard();
     gameBoard.printGameBoard();
   };
 
@@ -140,6 +145,8 @@ const displayScreen = (() => {
   };
 
   const resetGame = function () {
+    console.log(gameBoard.gameBoardArray);
+
     twoPlayerForm.classList.remove('hidden');
 
     displayScreen.gameBoardEl.classList.add('hidden');
@@ -160,30 +167,31 @@ const displayScreen = (() => {
   };
 
   const toggleModal = content => {
-    const overlay = document.querySelector('.overlay');
-    const overlayText = document.querySelector('.overlay-text');
     overlayText.innerHTML = '';
 
     const displayContent = document.createElement('p');
     overlayText.appendChild(displayContent);
     displayContent.textContent = content;
-    overlay.classList.toggle('hidden');
-    overlayText.classList.toggle('hidden');
-    const clearOverlay = () => {
-      overlayText.innerHTML = '';
-      overlay.classList.add('hidden');
-      overlayText.classList.add('hidden');
-      clearBoard();
-      gameBoard.printGameBoard();
-    };
-    overlay.addEventListener('click', clearOverlay);
-    overlayText.addEventListener('click', clearOverlay);
+    overlay.classList.remove('hidden');
+    overlayText.classList.remove('hidden');
+  };
+
+  const clearOverlay = () => {
+    console.log(gameBoard.gameBoardArray);
+    overlayText.removeChild(overlayText.firstChild);
+    overlay.classList.add('hidden');
+    overlayText.classList.add('hidden');
+    clearBoard();
+    gameBoard.printGameBoard();
   };
 
   const revertToMainMenu = function () {
     clearBoard();
     resetGame();
   };
+
+  overlay.addEventListener('click', clearOverlay);
+  overlayText.addEventListener('click', clearOverlay);
 
   return {
     gameBoardEl,
@@ -222,7 +230,7 @@ const game = (() => {
     }
   };
 
-  const checkWinnerHorizontal = () =>
+  const checkWinnerHorizontal = () => {
     gameBoard.gameBoardArray.forEach(row => {
       if (row.every(el => el === 'x')) {
         playerOneWins();
@@ -232,9 +240,11 @@ const game = (() => {
         displayScreen.toggleModal('you lose');
       }
     });
+  };
 
   const checkWinnerVertical = () => {
     const updatedBoard = gameBoard.gameBoardArray.flat();
+
     for (let i = 0; i < updatedBoard.length; i++) {
       if (
         updatedBoard[i] === 'x' &&
@@ -256,6 +266,7 @@ const game = (() => {
 
   const checkWinnerDiagonal = () => {
     const updatedBoard = gameBoard.gameBoardArray.flat();
+    console.log(updatedBoard);
     if (
       (updatedBoard[0] === 'x' &&
         updatedBoard[4] === 'x' &&
@@ -280,10 +291,10 @@ const game = (() => {
   };
 
   const checkGameOver = () => {
+    checkDraw();
     checkWinnerHorizontal();
     checkWinnerVertical();
     checkWinnerDiagonal();
-    checkDraw();
   };
 
   btnStart.addEventListener('click', displayScreen.startGame);
