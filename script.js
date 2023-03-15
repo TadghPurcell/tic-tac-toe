@@ -1,16 +1,14 @@
 'use strict';
 
 const gameBoard = (() => {
-  const gameBoardEl = document.querySelector('.gameboard');
-
   let gameBoardArray = [
-    ['.', '.', '.'],
-    ['.', '.', '.'],
-    ['.', '.', '.'],
+    ['', '', ''],
+    ['', '', ''],
+    ['', '', ''],
   ];
 
   const selectBoardCell = (row, column) => {
-    if (gameBoard.gameBoardArray[row][column] === '.') {
+    if (gameBoard.gameBoardArray[row][column] === '') {
       game.activePlayer === 0
         ? (gameBoard.gameBoardArray[row][column] = 'x')
         : (gameBoard.gameBoardArray[row][column] = 'o');
@@ -30,55 +28,57 @@ const gameBoard = (() => {
       cellSquare.addEventListener('click', function (e) {
         if (e.target.attributes.index.value === '0') {
           displayScreen.updateTextContent(e);
-          gameBoard.selectBoardCell(0, 0);
+          selectBoardCell(0, 0);
         }
         if (e.target.attributes.index.value === '1') {
           displayScreen.updateTextContent(e);
-          gameBoard.selectBoardCell(0, 1);
+          selectBoardCell(0, 1);
         }
         if (e.target.attributes.index.value === '2') {
           displayScreen.updateTextContent(e);
-          gameBoard.selectBoardCell(0, 2);
+          selectBoardCell(0, 2);
         }
         if (e.target.attributes.index.value === '3') {
           displayScreen.updateTextContent(e);
-          gameBoard.selectBoardCell(1, 0);
+          selectBoardCell(1, 0);
         }
         if (e.target.attributes.index.value === '4') {
           displayScreen.updateTextContent(e);
-          gameBoard.selectBoardCell(1, 1);
+          selectBoardCell(1, 1);
         }
         if (e.target.attributes.index.value === '5') {
           displayScreen.updateTextContent(e);
-          gameBoard.selectBoardCell(1, 2);
+          selectBoardCell(1, 2);
         }
         if (e.target.attributes.index.value === '6') {
           displayScreen.updateTextContent(e);
-          gameBoard.selectBoardCell(2, 0);
+          selectBoardCell(2, 0);
         }
         if (e.target.attributes.index.value === '7') {
           displayScreen.updateTextContent(e);
-          gameBoard.selectBoardCell(2, 1);
+          selectBoardCell(2, 1);
         }
         if (e.target.attributes.index.value === '8') {
           displayScreen.updateTextContent(e);
-          gameBoard.selectBoardCell(2, 2);
+          selectBoardCell(2, 2);
         }
       });
-      gameBoard.gameBoardEl.appendChild(cellSquare);
+      displayScreen.gameBoardEl.appendChild(cellSquare);
     });
   };
 
   return {
     gameBoardArray,
-    gameBoardEl,
     printGameBoard,
-    selectBoardCell,
   };
 })();
 
 const displayScreen = (() => {
+  const gameBoardEl = document.querySelector('.gameboard');
+
   const twoPlayerForm = document.querySelector('.start-two-player');
+  const inputPlayerOne = document.getElementById('player-one');
+  const inputPlayerTwo = document.getElementById('player-two');
 
   const scoreboardPlayerOneEl = document.querySelector(
     '.scoreboard-player-one'
@@ -91,27 +91,11 @@ const displayScreen = (() => {
   const scoreboardOneScore = document.createElement('p');
   const scoreboardTwoScore = document.createElement('p');
 
-  const startGame = e => {
-    e.preventDefault();
-
-    twoPlayerForm.classList.add('hidden');
-
-    gameBoard.gameBoardEl.classList.remove('hidden');
-    game.btnRestart.classList.remove('hidden');
-    scoreboardPlayerOneEl.classList.remove('hidden');
-    scoreboardPlayerTwoEl.classList.remove('hidden');
-
-    game.getPlayerNames();
-    displayScreen.populateScoreboards();
-
-    gameBoard.printGameBoard();
-  };
-
   const clearBoard = () => {
     gameBoard.gameBoardArray = gameBoard.gameBoardArray.map(row =>
-      row.map(cell => (cell = '.'))
+      row.map(cell => (cell = ''))
     );
-    gameBoard.gameBoardEl.innerHTML = '';
+    displayScreen.gameBoardEl.innerHTML = '';
     updateScores();
     game.activePlayer = 0;
   };
@@ -132,6 +116,21 @@ const displayScreen = (() => {
     scoreboardPlayerTwoEl.appendChild(scoreboardTwoScore);
   };
 
+  const startGame = e => {
+    e.preventDefault();
+
+    twoPlayerForm.classList.add('hidden');
+
+    displayScreen.gameBoardEl.classList.remove('hidden');
+    game.btnRestart.classList.remove('hidden');
+    scoreboardPlayerOneEl.classList.remove('hidden');
+    scoreboardPlayerTwoEl.classList.remove('hidden');
+
+    game.getPlayerNames();
+    populateScoreboards();
+    gameBoard.printGameBoard();
+  };
+
   const updateTextContent = e => {
     if (!e.target.textContent) {
       game.activePlayer === 0
@@ -143,7 +142,7 @@ const displayScreen = (() => {
   const resetGame = function () {
     twoPlayerForm.classList.remove('hidden');
 
-    gameBoard.gameBoardEl.classList.add('hidden');
+    displayScreen.gameBoardEl.classList.add('hidden');
     game.btnRestart.classList.add('hidden');
     scoreboardPlayerOneEl.classList.add('hidden');
     scoreboardPlayerTwoEl.classList.add('hidden');
@@ -156,8 +155,8 @@ const displayScreen = (() => {
     scoreboardPlayerOneEl.removeChild(scoreboardOneName);
     scoreboardPlayerTwoEl.removeChild(scoreboardTwoName);
 
-    game.inputPlayerOne.value = '';
-    game.inputPlayerTwo.value = '';
+    inputPlayerOne.value = '';
+    inputPlayerTwo.value = '';
   };
 
   const toggleModal = content => {
@@ -174,7 +173,7 @@ const displayScreen = (() => {
       overlayText.innerHTML = '';
       overlay.classList.add('hidden');
       overlayText.classList.add('hidden');
-      displayScreen.clearBoard();
+      clearBoard();
       gameBoard.printGameBoard();
     };
     overlay.addEventListener('click', clearOverlay);
@@ -187,18 +186,15 @@ const displayScreen = (() => {
   };
 
   return {
-    populateScoreboards,
-    clearBoard,
+    gameBoardEl,
     updateTextContent,
+    startGame,
     toggleModal,
     revertToMainMenu,
-    startGame,
   };
 })();
 
 const game = (() => {
-  const inputPlayerOne = document.getElementById('player-one');
-  const inputPlayerTwo = document.getElementById('player-two');
   const btnStart = document.querySelector('.btn-form');
   const btnRestart = document.querySelector('.btn-restart');
 
@@ -221,7 +217,7 @@ const game = (() => {
     game.activePlayer === 0 ? (game.activePlayer = 1) : (game.activePlayer = 0); //game
 
   const checkDraw = () => {
-    if (gameBoard.gameBoardArray.flat().every(el => el !== '.')) {
+    if (gameBoard.gameBoardArray.flat().every(el => el !== '')) {
       displayScreen.toggleModal('Its a Draw!');
     }
   };
@@ -294,13 +290,11 @@ const game = (() => {
   btnRestart.addEventListener('click', displayScreen.revertToMainMenu);
 
   return {
-    inputPlayerOne,
-    inputPlayerTwo,
     btnRestart,
     activePlayer,
+    playerScores,
     playerNames,
     getPlayerNames,
-    playerScores,
     switchActivePlayer,
     checkGameOver,
   };
