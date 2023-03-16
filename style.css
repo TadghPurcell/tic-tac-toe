@@ -33,9 +33,10 @@ button {
   font-family: inherit;
   color: inherit;
   letter-spacing: inherit;
-  font-family: urbanist, sans-serif;
 }
+
 input {
+  font-family: urbanist, sans-serif;
   font-size: 3rem;
   background-color: #43334e33;
   color: #43334e;
