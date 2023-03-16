@@ -73,6 +73,7 @@ h1 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   margin-bottom: 80px;
+  /* height: 80vh; */
 }
 
 .start-two-player {
@@ -82,6 +83,7 @@ h1 {
   flex-direction: column;
   align-items: center;
   gap: 28px;
+  justify-content: center;
 }
 
 .start-two-player > * {
@@ -159,4 +161,23 @@ input:-webkit-autofill:focus {
   /* border: 10px solid #43334e; */
   /* border-radius: 15px; */
   background-color: #b18dc9;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  font-size: 2rem;
+  height: 8vh;
+
+  width: 100%;
+}
+
+a {
+  text-decoration: none;
+}
+a:visited {
+  color: #43334e;
 }
