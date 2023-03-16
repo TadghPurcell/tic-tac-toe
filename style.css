@@ -25,6 +25,7 @@ body {
   font-size: 4rem;
   font-family: urbanist, sans-serif;
   letter-spacing: 0.12rem;
+  font-family: 'ZCOOL KuaiLe';
 }
 
 input,
@@ -32,6 +33,7 @@ button {
   font-family: inherit;
   color: inherit;
   letter-spacing: inherit;
+  font-family: urbanist, sans-serif;
 }
 input {
   font-size: 3rem;
@@ -107,6 +109,7 @@ h1 {
   background-color: #c79ce5;
   font-size: 7rem;
   color: #43334e;
+  font-family: 'ZCOOL KuaiLe';
 }
 
 .overlay {
@@ -171,6 +174,7 @@ input:-webkit-autofill:focus {
   justify-content: space-around;
   font-size: 2rem;
   height: 8vh;
+  font-family: urbanist, sans-serif;
 
   width: 100%;
 }

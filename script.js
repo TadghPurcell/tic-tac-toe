@@ -90,8 +90,8 @@ const displayScreen = (() => {
   );
   const scoreboardOneName = document.createElement('p');
   const scoreboardTwoName = document.createElement('p');
-  const scoreboardOneScore = document.createElement('p');
-  const scoreboardTwoScore = document.createElement('p');
+  const scoreboardOneScore = document.querySelector('.scoreboard-one-score');
+  const scoreboardTwoScore = document.querySelector('.scoreboard-two-score');
   const overlay = document.querySelector('.overlay');
   const overlayText = document.querySelector('.overlay-text');
 
@@ -112,16 +112,10 @@ const displayScreen = (() => {
   const populateScoreboards = function () {
     scoreboardOneName.textContent = `${game.playerNames[0]}`;
     scoreboardTwoName.textContent = `${game.playerNames[1]}`;
-    // updateScores();
+    updateScores();
 
     scoreboardPlayerOneEl.appendChild(scoreboardOneName);
-    document.querySelector('.scoreboard-one-score').textContent =
-      game.playerScores[0];
-    document.querySelector('.scoreboard-two-score').textContent =
-      game.playerScores[1];
-    // scoreboardPlayerOneEl.appendChild(scoreboardOneScore);
     scoreboardPlayerTwoEl.appendChild(scoreboardTwoName);
-    // scoreboardPlayerTwoEl.appendChild(scoreboardTwoScore);
   };
 
   const startGame = e => {
@@ -185,7 +179,6 @@ const displayScreen = (() => {
   };
 
   const clearOverlay = () => {
-    console.log(gameBoard.gameBoardArray);
     overlayText.removeChild(overlayText.firstChild);
     overlay.classList.add('hidden');
     overlayText.classList.add('hidden');
