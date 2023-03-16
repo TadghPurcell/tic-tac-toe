@@ -1,6 +1,11 @@
 @font-face {
   font-family: urbanist;
-  src: url(Urbanist-VariableFont_wght.ttf);
+  src: url(./Urbanist-VariableFont_wght.ttf);
+}
+
+@font-face {
+  font-family: 'ZCOOL KuaiLe';
+  src: url(./ZCOOLKuaiLe-Regular.ttf);
 }
 
 * {
@@ -15,52 +20,91 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: #364954;
+  color: #43334e;
+  background-color: #c79ce5;
   font-size: 4rem;
   font-family: urbanist, sans-serif;
+  letter-spacing: 0.12rem;
+}
+
+input,
+button {
+  font-family: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+input {
+  font-size: 3rem;
+  background-color: #43334e33;
+  color: #43334e;
+  border: none;
+  border-radius: 15px;
+  padding: 3px;
+  text-align: center;
+}
+input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+*:focus {
+  outline: none;
+}
+label {
+  cursor: pointer;
+  font-size: 3rem;
+}
+
+button {
+  padding: 10px 40px;
+  border: none;
+  background-color: #c79ce5;
+  font-size: 3rem;
+  cursor: pointer;
 }
 
 h1 {
   font-size: 4rem;
+  color: #43334e;
   padding: 50px;
+  font-family: 'ZCOOL KuaiLe';
+  letter-spacing: 1rem;
 }
 
 .main-display {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  margin-bottom: 80px;
 }
 
 .start-two-player {
   width: 500px;
   height: 500px;
-  border: 1px solid #000;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 28px;
 }
 
 .start-two-player > * {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 16px;
 }
 .gameboard {
-  height: 500px;
-  width: 500px;
+  height: 50vh;
+  width: 25vw;
   border: none;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  gap: 16px;
-  background-color: #364954;
+  gap: 6px;
+  background-color: #43334e;
 }
 
 .gameboard .cell {
   border: none;
-  background-color: #00bef8;
+  background-color: #c79ce5;
   font-size: 7rem;
-  color: #364954;
+  color: #43334e;
 }
 
 .overlay {
@@ -73,6 +117,11 @@ h1 {
 
 .hidden {
   display: none;
+}
+
+.header {
+  padding-bottom: 16px;
+  margin-bottom: 16px;
 }
 
 .overlay-text {
@@ -90,9 +139,15 @@ h1 {
 
 .scoreboard-player-one,
 .scoreboard-player-two {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 16px;
+  justify-content: space-evenly;
+}
+
+.cell:hover {
+  /* border: 10px solid #43334e; */
+  /* border-radius: 15px; */
+  background-color: #b18dc9;
 }

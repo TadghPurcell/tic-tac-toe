@@ -230,10 +230,10 @@ const game = (() => {
     gameBoard.gameBoardArray.forEach(row => {
       if (row.every(el => el === 'x')) {
         playerOneWins();
-        displayScreen.toggleModal('You Win');
+        displayScreen.toggleModal(`${game.playerNames[0]} wins!`);
       } else if (row.every(el => el === 'o')) {
         playerTwoWins();
-        displayScreen.toggleModal('you lose');
+        displayScreen.toggleModal(`${game.playerNames[1]} wins!`);
       }
     });
   };
@@ -248,14 +248,14 @@ const game = (() => {
         updatedBoard[i + 6] === 'x'
       ) {
         playerOneWins();
-        displayScreen.toggleModal('you win');
+        displayScreen.toggleModal(`${game.playerNames[0]} wins!`);
       } else if (
         updatedBoard[i] === 'o' &&
         updatedBoard[i + 3] === 'o' &&
         updatedBoard[i + 6] === 'o'
       ) {
         playerTwoWins();
-        displayScreen.toggleModal('you lose');
+        displayScreen.toggleModal(`${game.playerNames[1]} wins!`);
       }
     }
   };
@@ -272,7 +272,7 @@ const game = (() => {
         updatedBoard[6] === 'x')
     ) {
       playerOneWins();
-      displayScreen.toggleModal('you win');
+      displayScreen.toggleModal(`${game.playerNames[0]} wins!`);
     } else if (
       (updatedBoard[0] === 'o' &&
         updatedBoard[4] === 'o' &&
@@ -282,7 +282,7 @@ const game = (() => {
         updatedBoard[6] === 'o')
     ) {
       playerTwoWins();
-      displayScreen.toggleModal('you lose');
+      displayScreen.toggleModal(`${game.playerNames[1]} wins!`);
     }
   };
 
