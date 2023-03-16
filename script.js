@@ -25,7 +25,7 @@ const gameBoard = (() => {
       cellSquare.classList.add('cell');
       cellSquare.setAttribute('index', i);
 
-      cellSquare.addEventListener('click', function (e) {
+      cellSquare.addEventListener('click', e => {
         console.log(gameBoard.gameBoardArray);
         if (e.target.attributes.index.value === '0') {
           displayScreen.updateTextContent(e);
@@ -75,13 +75,11 @@ const gameBoard = (() => {
 })();
 
 const displayScreen = (() => {
-  const gameBoardEl = document.querySelector('.gameboard');
-
   const twoPlayerForm = document.querySelector('.start-two-player');
   const inputPlayerOne = document.getElementById('player-one');
   const inputPlayerTwo = document.getElementById('player-two');
 
-  // const mainDisplay = document.querySelector('.main-display');
+  const gameBoardEl = document.querySelector('.gameboard');
   const scoreboardPlayerOneEl = document.querySelector(
     '.scoreboard-player-one'
   );
@@ -92,6 +90,7 @@ const displayScreen = (() => {
   const scoreboardTwoName = document.createElement('p');
   const scoreboardOneScore = document.querySelector('.scoreboard-one-score');
   const scoreboardTwoScore = document.querySelector('.scoreboard-two-score');
+
   const overlay = document.querySelector('.overlay');
   const overlayText = document.querySelector('.overlay-text');
 
@@ -109,7 +108,7 @@ const displayScreen = (() => {
     scoreboardTwoScore.textContent = `${game.playerScores[1]}`;
   };
 
-  const populateScoreboards = function () {
+  const populateScoreboards = () => {
     scoreboardOneName.textContent = `${game.playerNames[0]}`;
     scoreboardTwoName.textContent = `${game.playerNames[1]}`;
     updateScores();
@@ -119,7 +118,6 @@ const displayScreen = (() => {
   };
 
   const startGame = e => {
-    console.log(gameBoard.gameBoardArray);
     e.preventDefault();
 
     twoPlayerForm.classList.add('hidden');
@@ -142,14 +140,11 @@ const displayScreen = (() => {
     }
   };
 
-  const resetGame = function () {
+  const resetGame = () => {
     console.log(gameBoard.gameBoardArray);
 
     twoPlayerForm.classList.remove('hidden');
-
     game.btnRestart.classList.add('hidden');
-    // mainDisplay.classList.add('hidden');
-
     gameBoardEl.classList.add('hidden');
     scoreboardPlayerOneEl.classList.add('visibility-hidden');
     scoreboardPlayerTwoEl.classList.add('visibility-hidden');
@@ -161,8 +156,6 @@ const displayScreen = (() => {
 
     scoreboardPlayerOneEl.removeChild(scoreboardOneName);
     scoreboardPlayerTwoEl.removeChild(scoreboardTwoName);
-    // scoreboardPlayerOneEl.removeChild(scoreboardOneScore);
-    // scoreboardPlayerTwoEl.removeChild(scoreboardTwoScore);
 
     inputPlayerOne.value = '';
     inputPlayerTwo.value = '';
@@ -172,21 +165,25 @@ const displayScreen = (() => {
     overlayText.innerHTML = '';
 
     const displayContent = document.createElement('p');
+
     overlayText.appendChild(displayContent);
     displayContent.textContent = content;
+
     overlay.classList.remove('hidden');
     overlayText.classList.remove('hidden');
   };
 
   const clearOverlay = () => {
     overlayText.removeChild(overlayText.firstChild);
+
     overlay.classList.add('hidden');
     overlayText.classList.add('hidden');
+
     clearBoard();
     gameBoard.printGameBoard();
   };
 
-  const revertToMainMenu = function () {
+  const revertToMainMenu = () => {
     clearBoard();
     resetGame();
   };
@@ -267,7 +264,7 @@ const game = (() => {
 
   const checkWinnerDiagonal = () => {
     const updatedBoard = gameBoard.gameBoardArray.flat();
-    console.log(updatedBoard);
+
     if (
       (updatedBoard[0] === 'x' &&
         updatedBoard[4] === 'x' &&
