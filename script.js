@@ -81,6 +81,7 @@ const displayScreen = (() => {
   const inputPlayerOne = document.getElementById('player-one');
   const inputPlayerTwo = document.getElementById('player-two');
 
+  const mainDisplay = document.querySelector('.main-display');
   const scoreboardPlayerOneEl = document.querySelector(
     '.scoreboard-player-one'
   );
@@ -124,11 +125,8 @@ const displayScreen = (() => {
     e.preventDefault();
 
     twoPlayerForm.classList.add('hidden');
-
-    displayScreen.gameBoardEl.classList.remove('hidden');
+    mainDisplay.classList.remove('hidden');
     game.btnRestart.classList.remove('hidden');
-    scoreboardPlayerOneEl.classList.remove('hidden');
-    scoreboardPlayerTwoEl.classList.remove('hidden');
 
     game.getPlayerNames();
     populateScoreboards();
@@ -149,10 +147,8 @@ const displayScreen = (() => {
 
     twoPlayerForm.classList.remove('hidden');
 
-    displayScreen.gameBoardEl.classList.add('hidden');
     game.btnRestart.classList.add('hidden');
-    scoreboardPlayerOneEl.classList.add('hidden');
-    scoreboardPlayerTwoEl.classList.add('hidden');
+    mainDisplay.classList.add('hidden');
 
     game.playerNames.pop();
     game.playerNames.pop();
