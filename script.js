@@ -81,7 +81,7 @@ const displayScreen = (() => {
   const inputPlayerOne = document.getElementById('player-one');
   const inputPlayerTwo = document.getElementById('player-two');
 
-  const mainDisplay = document.querySelector('.main-display');
+  // const mainDisplay = document.querySelector('.main-display');
   const scoreboardPlayerOneEl = document.querySelector(
     '.scoreboard-player-one'
   );
@@ -112,12 +112,16 @@ const displayScreen = (() => {
   const populateScoreboards = function () {
     scoreboardOneName.textContent = `${game.playerNames[0]}`;
     scoreboardTwoName.textContent = `${game.playerNames[1]}`;
-    updateScores();
+    // updateScores();
 
     scoreboardPlayerOneEl.appendChild(scoreboardOneName);
-    scoreboardPlayerOneEl.appendChild(scoreboardOneScore);
+    document.querySelector('.scoreboard-one-score').textContent =
+      game.playerScores[0];
+    document.querySelector('.scoreboard-two-score').textContent =
+      game.playerScores[1];
+    // scoreboardPlayerOneEl.appendChild(scoreboardOneScore);
     scoreboardPlayerTwoEl.appendChild(scoreboardTwoName);
-    scoreboardPlayerTwoEl.appendChild(scoreboardTwoScore);
+    // scoreboardPlayerTwoEl.appendChild(scoreboardTwoScore);
   };
 
   const startGame = e => {
@@ -125,8 +129,10 @@ const displayScreen = (() => {
     e.preventDefault();
 
     twoPlayerForm.classList.add('hidden');
-    mainDisplay.classList.remove('hidden');
     game.btnRestart.classList.remove('hidden');
+    gameBoardEl.classList.remove('hidden');
+    scoreboardPlayerOneEl.classList.remove('visibility-hidden');
+    scoreboardPlayerTwoEl.classList.remove('visibility-hidden');
 
     game.getPlayerNames();
     populateScoreboards();
@@ -148,7 +154,11 @@ const displayScreen = (() => {
     twoPlayerForm.classList.remove('hidden');
 
     game.btnRestart.classList.add('hidden');
-    mainDisplay.classList.add('hidden');
+    // mainDisplay.classList.add('hidden');
+
+    gameBoardEl.classList.add('hidden');
+    scoreboardPlayerOneEl.classList.add('visibility-hidden');
+    scoreboardPlayerTwoEl.classList.add('visibility-hidden');
 
     game.playerNames.pop();
     game.playerNames.pop();
@@ -157,6 +167,8 @@ const displayScreen = (() => {
 
     scoreboardPlayerOneEl.removeChild(scoreboardOneName);
     scoreboardPlayerTwoEl.removeChild(scoreboardTwoName);
+    // scoreboardPlayerOneEl.removeChild(scoreboardOneScore);
+    // scoreboardPlayerTwoEl.removeChild(scoreboardTwoScore);
 
     inputPlayerOne.value = '';
     inputPlayerTwo.value = '';
